@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base target="_top" />
+  <title>ระบบรับสมัครบุคลากรใหม่</title>
+  <!-- BootStrap CSS 5.1.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+
+  <!-- jQuery 3.6.0 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"></script>
+
+  <!-- ICON Font Awesome -->
+  <script src="https://kit.fontawesome.com/ad42651166.js" crossorigin="anonymous"></script>
+
+  <!-- Auto Complete Thailand ที่อยู่ประเทศไทยอัตโนมัติ เครดิต https://earthchie.github.io/jquery.Thailand.js/  -->
+  <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+  <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+  <link rel="stylesheet" href="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.css" />
+  <script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+  <?!=include('css');?>
+</head>
+<!-- ปุ่มกลับด้านบน -->
+<button class="back-to-top" type="button"></button>
+
+<body>
+  <main>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #113458;" >
+      <div class="container">
+        <?var url = getUrl();?>
+        <a class="navbar-brand" href="<?=url?>?page=index"></a>
+        <h3 class="prompt text-white"><img src="https://drive.google.com/file/d/1fQJgmtIxJTC_XxtT8S0aqnY7ovgOsuBO/view?usp=share_link" width="80" height="80" /> ศูนย์เทคโนโลยีดิจิทัล หน่วยราชการในพระองค์</h3>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor03">
+          <ul class="navbar-nav mr-auto w-100 justify-content-end">
+            <li class="nav-item">
+              <?var url = getUrl();?>
+              <a class="nav-link" href="<?=url?>?page=search"><i class="fas fa-search mr-2"></i> ค้นหารายชื่อ</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section><br>
+      <div class="container">
+        <div class="card text-dark bg-warning mb-12">
+          <div class="h4 card-header prompt">ใบสมัครเข้ารับการคัดเลือกศูนย์เทคโนโลยีดิจิทัล</div>
+          <div class="card-body">
+            <p class="card-text prompt">ใบสมัครเข้ารับการคัดเลือก เพื่อบรรจุเป็นลูกจ้างท้ายที่นั่ง ศูนย์เทคโนโลยีดิจิทัล</p>
+            <p class="card-text prompt">หากต้องการประสานขอรับข้อมูลเพิ่มเติมติดต่อได้ที่ พ.อ.ภูษิต คล้ายหิรัญ โทร 082-351-5391</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <br />
+    <div class="container">
+      <form id="myForm" name="myForm" class="row g-3 needs-validation">
+        <div class="col-12 col-md-6 col-lg-3">
+          <h5><i class="fas fa-map-marked-alt mr-3"></i> เขตพื้นที่บริการ</h5>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="service" id="local1" value="ในเขต" checked />
+            <label class="form-check-label" for="local1">ในเขต</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="service" id="local2" value="นอกเขต" />
+            <label class="form-check-label" for="local2">นอกเขต</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <h5><i class="fas fa-address-card mr-3"></i> สมัครประเภท</h5>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="reg_type" id="type1" value="ทั่วไป" checked />
+            <label class="form-check-label" for="type1">ทั่วไป</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="reg_type" id="type2" value="ความสามารถพิเศษ" />
+            <label class="form-check-label" for="type2">ความสามารถพิเศษ</label>
+          </div>
+        </div>
+
+        <!-- ข้อมูลนักเรียน -->
+        <span style="font-size: 1em; color: green;"><i class="fas fa-user"></i> ข้อมูลผู้สมัคร</span>
+        <div class="col-12 col-md-3 col-lg-2">
+          <label for="prefix" class="form-label">คำนำหน้า</label>
+          <select class="form-select" name="prefix" id="prefix" required>
+            <option selected disabled value="">เลือก...</option>
+            <option>นาย</option>
+            <option>นาง</option>
+            <option>นางสาว</option>
+          </select>
+          <div class="invalid-feedback">
+            เลือกคำนำหน้า
+          </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+          <label for="name" class="form-label">ชื่อ</label>
+          <input type="text" class="form-control" name="name" id="name" required />
+          <div class="invalid-feedback">
+            กรอกชื่อ
+          </div>
+        </div>
+        <div class="col-12 col-md-5 col-lg-3">
+          <label for="lastname" class="form-label">นามสกุล</label>
+          <input type="text" class="form-control" name="lastname" id="lastname" required />
+          <div class="invalid-feedback">
+            กรอกนามสกุล
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <label for="birthday" class="form-label">วันเดือนปีเกิด</label>
+          <input class="form-control" name="birthday" id="birthday" required />
+          <div class="invalid-feedback">
+            กรอกวันเดือนปีเกิด
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <label for="idcard" class="form-label">เลขบัตรประชาชน</label>
+          <input type="text" class="form-control" name="idcard" id="idcard" placeholder="กรอกเลข 13 หลัก" minlength="13" maxlength="13" pattern="[0-9]{13}" required /><span class="error"></span>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <label for="race" class="form-label">เชื้อชาติ</label>
+          <input type="text" class="form-control" name="race" id="race" value="ไทย" required />
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <label for="nationality" class="form-label">สัญชาติ</label>
+          <input type="text" class="form-control" name="nationality" id="nationality" value="ไทย" required />
+        </div>
+        <div class="col-12 col-md-4 col-lg-3">
+          <label for="religion" class="form-label">ศาสนา</label>
+          <input type="text" class="form-control" name="religion" id="religion" value="พุทธ" required /><br />
+        </div>
+
+        <!-- ที่อยู่ -->
+        <span style="font-size: 1em; color: green;"><i class="fas fa-map-marker-alt"></i> ที่อยู่ปัจจุบัน</span>
+        <div class="col-md-2">
+          <label for="house_no" class="form-label">บ้านเลขที่</label>
+          <input type="text" class="form-control" name="house_no" id="house_no" required />
+          <div class="invalid-feedback">
+            กรอกบ้านเลขที่
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label for="village_no" class="form-label">หมู่ที่</label>
+          <input type="text" class="form-control" name="village_no" id="village_no" required />
+          <div class="invalid-feedback">
+            หมู่ที่ หากไม่มีใส่ -
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="village" class="form-label">หมู่บ้าน</label>
+          <input type="text" class="form-control" name="village" id="village" required />
+          <div class="invalid-feedback">
+            ชื่อหมู่บ้าน หากไม่มีใส่ -
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label for="road" class="form-label">ถนน</label>
+          <input type="text" class="form-control" name="road" id="road" />
+        </div>
+        <div class="col-md-2">
+          <label for="alley" class="form-label">ซอย</label>
+          <input type="text" class="form-control" name="alley" id="alley" />
+        </div>
+
+        <!-- เริ่มแถวใหม่ แต่ละแถวให้ได้ col 12 คอลัมภ์ -->
+        <div class="col-6 col-md-2">
+          <label for="district" class="form-label">แขวง/ตำบล</label>
+          <input type="text" class="form-control" name="district" id="district" required />
+        </div>
+        <div class="col-6 col-md-2">
+          <label for="amphoe" class="form-label">เขต/อำเภอ</label>
+          <input type="text" class="form-control" name="amphoe" id="amphoe" required />
+        </div>
+        <div class="col-6 col-md-3">
+          <label for="province" class="form-label">จังหวัด</label>
+          <input type="text" class="form-control" name="province" id="province" required />
+        </div>
+        <div class="col-6 col-md-2">
+          <label for="zipcode" class="form-label">รหัสไปรษณีย์</label>
+          <input type="text" class="form-control" name="zipcode" id="zipcode" pattern="[0-9]{5}" required />
+        </div>
+        <div class="col-12 col-md-3">
+          <label for="student_phone" class="form-label">โทรศัพท์มือถือนักเรียน</label>
+          <input type="tel" class="form-control" name="student_phone" id="student_phone" minlength="10" maxlength="10" pattern="[0]{1}[0-9]{9}" placeholder="0xxxxxxxxx" required />
+          <div class="invalid-feedback">
+            กรอกเบอร์โทรให้ครบ 10 หลัก
+          </div>
+        </div>
+
+        <!-- การศึกษา -->
+        <span style="font-size: 1em; color: green;"><i class="fas fa-graduation-cap"></i> การศึกษา</span>
+        <div class="col-12 col-md-6 col-lg-3">
+          <label for="school" class="form-label">จบจากสถานศึกษา</label>
+          <input type="text" class="form-control" name="school" id="school" required />
+          <div class="invalid-feedback">
+            กรอกชื่อสถานศึกษา
+          </div>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <label for="district1" class="form-label">แขวง/ตำบล</label>
+          <input type="text" class="form-control" name="district1" id="district1" required />
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <label for="amphoe1" class="form-label">เขต/อำเภอ</label>
+          <input type="text" class="form-control" name="amphoe1" id="amphoe1" required />
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <label for="province1" class="form-label">จังหวัด</label>
+          <input type="text" class="form-control" name="province1" id="province1" required />
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <label for="zipcode1" class="form-label">รหัสไปรษณีย์</label>
+          <input type="text" class="form-control" name="zipcode1" id="zipcode1" required />
+        </div>
+        <div class="col-12 col-md-4 col-lg-1">
+          <label for="gpa" class="form-label">เกรดเฉลี่ย</label>
+          <input type="number" class="form-control" name="gpa" id="gpa" value="" min="0.00" max="4.00" step="0.01" placeholder="4.00" required />
+          <div class="invalid-feedback">
+            ระบุเกรดเฉลี่ย
+          </div>
+        </div>
+
+        <!-- ประเภทของโรงเรียนเดิม -->
+        <!-- <div class="row"> -->
+        <div class="form-group col-md-6">
+          <p><i class="fas fa-school mr-3"></i> ประเภทของสถานศึกษา</p>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="school_type1" name="school_type" value="รัฐบาล" checked />
+            <label class="form-check-label" for="school_type1">รัฐบาล</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="school_type2" name="school_type" value="เอกชน" />
+            <label class="form-check-label" for="school_type2">เอกชน</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="disability" class="form-label"><i class="fas fa-wheelchair mr-3"></i> ความพิการ</label>
+          <select class="form-select" name="disability" id="disability" required>
+              <br />
+              <option selected disabled value="">เลือก...</option>
+              <option>ไม่พิการ</option>
+              <option>บกพร่องทางการเห็น</option>
+              <option>บกพร่องทางการได้ยิน</option>
+              <option>บกพร่องทางสติปัญญา</option>
+              <option>บกพร่องทางร่างกายและสุขภาพ</option>
+              <option>มีปัญหาทางการเรียนรู้</option>
+              <option>บกพร่องทางการพูดและภาษา</option>
+              <option>บกพร่องทางพฤติกรรมและอารมณ์</option>
+              <option>บุคคลออทิสติก</option>
+              <option>บุคคลพิการซ้อน</option>
+            </select>
+          <div class="invalid-feedback">
+            กรุณาเลือกประเภทความพิการ
+          </div>
+        </div>
+        <!-- </div> -->
+
+        <!-- บิดา -->
+        <span style="font-size: 1em; color: green;"><i class="fas fa-users"></i> ข้อมูลผู้ปกครอง</span>
+        <div class="col-md-6">
+          <label for="father" class="form-label"><i class="fas fa-male mr-3"></i> ชื่อ-สกุลบิดา</label>
+          <input type="text" class="form-control" name="father" id="father" required />
+          <div class="invalid-feedback">
+            กรอกชื่อ-สกุลบิดา
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="father_occupation" class="form-label"><i class="fas fa-user-tie mr-3"></i> อาชีพบิดา</label>
+          <input type="text" class="form-control" name="father_occupation" id="father_occupation" required />
+          <div class="invalid-feedback">
+            กรุณาระบุอาชีพของบิดา
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="father_phone" class="form-label"><i class="fas fa-phone-alt mr-3"></i> โทรศัพท์มือถือบิดา</label>
+          <input type="tel" class="form-control" name="father_phone" id="father_phone" maxlength="10" pattern="[0]{1}[0-9]{9}" placeholder="0xxxxxxxxx" required />
+          <div class="invalid-feedback">
+            กรอกเบอร์โทรให้ครบ 10 หลัก
+          </div>
+        </div>
+        <!-- มารดา -->
+        <div class="col-md-6">
+          <label for="mother" class="form-label"><i class="fas fa-female mr-3"></i> ชื่อ-สกุลมารดา</label>
+          <input type="text" class="form-control" name="mother" id="mother" required />
+          <div class="invalid-feedback">
+            กรอกชื่อ-สกุลมารดา
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="mother_occupation" class="form-label"><i class="fas fa-user-tie mr-3"></i> อาชีพมารดา</label>
+          <input type="text" class="form-control" name="mother_occupation" id="mother_occupation" required />
+          <div class="invalid-feedback">
+            กรุณาระบุอาชีพของมารดา
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="mother_phone" class="form-label"><i class="fas fa-phone-alt mr-3"></i> โทรศัพท์มือถือมารดา</label>
+          <input type="tel" class="form-control" name="mother_phone" id="mother_phone" maxlength="10" pattern="[0]{1}[0-9]{9}" placeholder="0xxxxxxxxx" required />
+          <div class="invalid-feedback">
+            กรอกเบอร์โทรให้ครบ 10 หลัก
+          </div>
+        </div>
+        <!-- ผู้ปกครอง -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <label for="parent" class="form-label"><i class="fas fa-user mr-3"></i> ชื่อ-สกุลผู้รับรอง</label>
+          <input type="text" class="form-control" name="parent" id="parent" required />
+          <div class="invalid-feedback">
+            กรอกชื่อ-สกุลผู้รับรอง
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <label for="parent_occupation" class="form-label"><i class="fas fa-user-tie mr-3"></i> สังกัดผู้รับรอง </label>
+          <input type="text" class="form-control" name="parent_occupation" id="parent_occupation" required />
+          <div class="invalid-feedback">
+            กรุณาระบุอาชีพของผู้รับรอง
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <label for="parent_phone" class="form-label"><i class="fas fa-phone-alt mr-3"></i> โทรศัพท์มือถือผู้รับรอง</label>
+          <input type="tel" class="form-control" name="parent_phone" id="parent_phone" maxlength="10" pattern="[0]{1}[0-9]{9}" placeholder="0xxxxxxxxx" required />
+          <div class="invalid-feedback">
+            กรอกเบอร์โทรให้ครบ 10 หลัก
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-2">
+          <label for="relationship" class="form-label"><i class="fas fa-user-plus mr-3"></i> ความเกี่ยวข้องผู้สมัคร</label>
+          <input type="text" class="form-control" name="relationship" id="relationship" required />
+          <div class="invalid-feedback">
+            กรุณาระบุความสัมพันธ์กับผู้สมัคร
+          </div>
+        </div>
+
+        <span style="font-size: 1em; color: Red;"><i class="fas fa-users"></i> กรุณาอัพโหลดไฟล์ ดังนี้ <br> 1. ไฟล์ภาพหน้าตรง <br> 2. ไฟล์ Resume <br> 3. สำเนาบัตรประชาชน <br> 4. </span>
+
+        <!-- อัพโหลดไฟล์ -->
+        <div class="col-12 col-md-4">
+          <h5><i class="fa fa-camera mr-3"></i> อัปโหลดรูปผู้สมัคร</h5>
+          <center><img class="rounded" id="image1" /></center>
+          <input class="form-control" type="file" id="files1" accept="image/*" required>
+          <div class="invalid-feedback">
+            กรุณาอัพโหลดรูปผู้สมัคร
+          </div>
+        </div>
+
+        <br />
+        <div id="error"></div>
+        <div class="col-12">
+          <center><button class="btn btn-success btn-lg" type="submit">บันทึกข้อมูล</button></center>
+          <br />
+        </div>
+      </form>
+    </div>
+    <div id="success" style="display: none;">
+      <center>
+        <h5 class="left-align teal-text center-align">แจ้งผลการบันทึกข้อมูล</h5>
+        <p class="h4 center-align">บันทึกข้อมูลเรียบร้อยแล้ว..</p>
+        <p class="center-align">
+          <?var url = getUrl();?><a href="<?=url?>?page=index"><i class="fas fa-home"></i> กลับหน้าหลัก</a>
+        </p>
+      </center>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer>
+    <div class="bg-secondary">
+      <div class="container">
+        <br />
+        <div class="row">
+          <div class="clo-lg-3 col-md-6">
+            <h4 class="text-white"><i class="fa fa-graduation-cap mr-3"></i> กองการศึกษา วิจัยและพัฒนา</h4>
+            <p class="h5 text-white">ศูนย์เทคโนโลยีดิจิทัล หน่วยราชการในพระองค์</p>
+            <p class="h5 text-white"></p>
+            <p class="text-white mali">
+              ผู้จัดทำ <i class="fa fa-star"></i> แผนกวิจัยและพัฒนา ฝ่ายวิจัยและพัฒนานวัตกรรมด้าน Software ©
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              | ติดต่อ 064-1069096
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <?!=include('js');?>
+</body>
+
+</html>

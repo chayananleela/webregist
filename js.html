@@ -1,0 +1,279 @@
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+  integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+  integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  
+<!-- Picker Date ปฏิทินไทย -->
+<script src="https://รับเขียนโปรแกรม.net/picker_date/picker_date.js"></script>
+
+<!-- Loading Overlay -->
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
+</script>
+
+<!-- SweetAlert2 แจ้งเตือนสวยๆ -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- บันทึกข้อมูลพร้อมอัพโหลดรูปไปยัง Sheet -->
+<script>
+  picker_date(document.getElementById("birthday"),{year_range:"-36:0"}); // กำหนดปฏิทินย้อนหลัง - 36 ปี , ล่วงหน้า 0 ปี
+
+var files1 = {}
+reader = new FileReader();
+reader.onloadend = function (e) {
+  if (e.target.error != null) {
+    showError("File " + file.name + " ไม่สามารถอ่านไฟล์ได้");
+    return;
+  } else {
+
+    google.script.run.withSuccessHandler(showSuccess).uploadFile([files1],
+    
+    $("input[type='radio'][name='service']:checked").val(),
+    $("input[type='radio'][name='reg_type']:checked").val(),
+    $("#prefix").val(),
+    $("#name").val(),
+    $("#lastname").val(),
+    $("#birthday").val(),
+    $("#idcard").val(),
+    $("#race").val(),
+    $("#nationality").val(),
+    $("#religion").val(),
+    $("#house_no").val(),
+    $("#village_no").val(),
+    $("#village").val(),
+    $("#road").val(),
+    $("#alley").val(),
+    $("#district").val(),
+    $("#amphoe").val(),
+    $("#province").val(),
+    $("#zipcode").val(),
+    $("#student_phone").val(),
+    $("#school").val(),
+    $("#district1").val(),
+    $("#amphoe1").val(),
+    $("#province1").val(),
+    $("#zipcode1").val(),
+    $("#gpa").val(),
+    $("input[type='radio'][name='school_type']:checked").val(),
+    $("#disability").val(),
+    $("#father").val(),
+    $("#father_occupation").val(),
+    $("#father_phone").val(),
+    $("#mother").val(),
+    $("#mother_occupation").val(),
+    $("#mother_phone").val(),
+    $("#parent").val(),
+    $("#parent_occupation").val(),
+    $("#parent_phone").val(),
+    $("#relationship").val(),
+      );
+  }
+};
+
+function showSuccess(e) {
+  if (e === "success") {
+    $("#myForm").hide();
+    $("#success").show();
+    $('#image1').hide();
+
+    $.LoadingOverlay("hide");
+    //-- แสดง sweet alert
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "บันทึกข้อมูลเรียบร้อยแล้ว",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    //-- จบแสดง sweet alert
+  } else {
+    showError(e);
+  }
+}
+
+function restartForm() {
+  $("#myForm").trigger("reset");
+  $("#success").hide();
+  $("#progress").html("");
+}
+
+document.getElementById("myForm").addEventListener("submit", submitForm);
+
+function submitForm() {
+  event.preventDefault();
+  if(document.getElementById('birthday').value == ""){
+      document.getElementById("error").innerHTML = "<div class='alert alert-danger' role='alert'>กรุณากรอกวันเดือนปีเกิด</div>";
+      setTimeout(function(){
+      document.getElementById('error').innerHTML= ""; }, 2500);  
+      }else{
+
+  var files = $("#files1")[0].files;
+  if (files.length === 0) {
+    Swal.fire({
+      position: "center",
+      icon: "warning",
+      title: "กรุณาเลือกรูปภาพ",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    return;
+   }
+  }
+  
+  file = files[0];
+  if (file.size > 1024 * 1024 * 5) {
+    Swal.fire({
+      position: "center",
+      icon: "warning",
+      title: "ขนาดไฟล์ควรไม่เกิน 5 MB",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    return;
+  }
+
+    $.LoadingOverlay("show", {
+    image       : "",
+    fontawesome : "fa fa-cog fa-spin"
+    });
+
+  reader.readAsDataURL(file);
+}
+
+/** รูปที่ 1 */
+document.getElementById("files1").onchange = function () {
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    document.getElementById("image1").src = e.target.result;
+    $("#image1").show();
+    files1.dataURL = e.target.result;
+    files1.name = document.getElementById("files1").files[0].name;
+    console.log(files1);
+    document.getElementById("image1").setAttribute("width", 150); // เพิ่มให้แสดงภาพ
+  };
+  reader.readAsDataURL(this.files[0]);
+};
+
+</script>
+
+<!-- Auto Complete Thailand ที่อยู่ประเทศไทยอัตโนมัติ -->
+<script type="text/javascript">
+  /* ที่อยู่นักเรียน */
+$.Thailand({
+    $district: $('#district'),
+    $amphoe: $('#amphoe'),
+    $province: $('#province'),
+    $zipcode: $('#zipcode'),
+    onDataFill: function(data) {
+        console.info('Data Filled', data);
+    },
+    onLoad: function() {
+        console.info('Autocomplete is ready!');
+        $('#loader, .demo').toggle();
+    }
+});
+// watch on change
+$('#district').change(function() {
+    console.log('ตำบล', this.value);
+});
+$('#amphoe').change(function() {
+    console.log('อำเภอ', this.value);
+});
+$('#province').change(function() {
+    console.log('จังหวัด', this.value);
+});
+$('#zipcode').change(function() {
+    console.log('รหัสไปรษณีย์', this.value);
+});
+</script>
+
+<script type="text/javascript">
+  /* ที่อยู่โรงเรียนเดิม */
+$.Thailand({
+      $district: $('#district1'),
+      $amphoe: $('#amphoe1'),
+      $province: $('#province1'),
+      $zipcode: $('#zipcode1'),
+      onDataFill: function(data) {
+          console.info('Data Filled', data);
+      },
+      onLoad: function() {
+          console.info('Autocomplete is ready!');
+          $('#loader, .demo').toggle();
+      }
+  });
+// watch on change
+$('#district1').change(function() {
+    console.log('ตำบล', this.value);
+});
+$('#amphoe1').change(function() {
+    console.log('อำเภอ', this.value);
+});
+$('#province1').change(function() {
+    console.log('จังหวัด', this.value);
+});
+$('#zipcode1').change(function() {
+    console.log('รหัสไปรษณีย์', this.value);
+});
+</script>
+
+<!-- ตรวจสอบเลขบัตรประชาชน -->
+<script>
+  $(document).ready(function(){
+  $('#idcard').on('keyup',function(){
+	if($.trim($(this).val()) != '' && $(this).val().length == 13){
+	  id = $(this).val().replace(/-/g,"");
+	  var result = Script_checkID(id);
+	  if(result === false){
+		$('span.error').removeClass('true').text('เลขบัตรผิด');
+	  }else{
+		$('span.error').addClass('true').text('เลขบัตรถูกต้อง');
+	  }
+	}else{
+	  $('span.error').removeClass('true').text('');
+	
+	}
+  })
+});
+
+function Script_checkID(id){
+	//if(! IsNumeric(id)) return false;
+	//if(id.substring(0,1)== 0) return false;
+	if(id.length != 13) return false;
+	for(i=0, sum=0; i < 12; i++)
+		sum += parseFloat(id.charAt(i))*(13-i);
+	if((11-sum%11)%10!=parseFloat(id.charAt(12))) return false;
+	return true;
+}
+/*
+function IsNumeric(input){
+	var RE = /^-?(0|INF|(0[1-7][0-7]*)|(0x[0-9a-fA-F]+)|((0|[1-9][0-9]*|(?=[\.,]))([\.,][0-9]+)?([eE]-?\d+)?))$/;
+	return (RE.test(input));
+}
+*/
+</script>
+
+<!-- ปุ่มกลับด้านบน -->
+<script>
+  // Back to top
+var amountScrolled = 200;
+var amountScrolledNav = 25;
+
+$(window).scroll(function() {
+  if ( $(window).scrollTop() > amountScrolled ) {
+    $('button.back-to-top').addClass('show');
+  } else {
+    $('button.back-to-top').removeClass('show');
+  }
+});
+
+$('button.back-to-top').click(function() {
+  $('html, body').animate({
+    scrollTop: 0
+  }, 800);
+  return false;
+});
+
+</script>
